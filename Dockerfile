@@ -21,6 +21,8 @@ RUN \
       make install && \
       cd .. && \
     cd .. && \
+    rm -rf nginx-* && \
+    rm -rf ngx_http_proxy_connect_module && \
   apt-get remove -y \
     git devscripts equivs nginx-build-deps && \
   apt-get clean -y && \
@@ -30,6 +32,5 @@ RUN \
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
 
 EXPOSE 3412
-EXPOSE 3413
 
 CMD /usr/local/nginx/sbin/nginx
