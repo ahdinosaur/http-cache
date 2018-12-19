@@ -1,6 +1,6 @@
 {
   "name": "http-cache",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "a Docker image to use Nginx as an HTTP proxy to cache static assets",
   "scripts": {
     "postinstall": "npm run certs",
