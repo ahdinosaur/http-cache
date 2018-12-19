@@ -15,14 +15,14 @@ RUN \
     apt-get source nginx && \
     git clone https://github.com/chobits/ngx_http_proxy_connect_module && \
     cd nginx-* && \
-      patch -p1 < ../ngx_http_proxy_connect_module/patch/proxy_connect.patch && \
-      ./configure --add-module=/app/ngx_http_proxy_connect_module && \
+      patch -p1 < ../ngx_http_proxy_connect_module/patch/proxy_connect_rewrite.patch && \
+      ./configure --add-module=/app/ngx_http_proxy_connect_module --with-http_ssl_module && \
       make && \
       make install && \
       cd .. && \
     cd .. && \
   apt-get remove -y \
-    git devscripts nginx-build-deps && \
+    git devscripts equivs nginx-build-deps && \
   apt-get clean -y && \
   apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/*
@@ -30,5 +30,6 @@ RUN \
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
 
 EXPOSE 3412
+EXPOSE 3413
 
 CMD /usr/local/nginx/sbin/nginx

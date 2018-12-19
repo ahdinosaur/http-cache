@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "description": "a Docker image to use Nginx as an HTTP proxy to cache static assets",
   "scripts": {
+    "postinstall": "npm run certs",
+    "certs": "openssl req -batch -x509 -nodes -days 3650 -newkey rsa:4096 -keyout ./certs/server.key -out ./certs/server.cert",
     "build": "docker build -t ahdinosaur/http-cache:$(jq -r .version package.json) .",
-    "start": "docker run -it --rm -p 3142:3142 -v $(pwd)/cacher/log:/var/log/nginx -v $(pwd)/cacher/data:/var/cache/nginx ahdinosaur/http-cache:$(jq -r .version package.json)",
+    "start": "bash example.sh",
     "publish": "docker push ahdinosaur/http-cache"
   },
   "license": "AGPL-3.0"
