@@ -7,7 +7,7 @@
     "certs": "openssl req -batch -x509 -nodes -days 3650 -newkey rsa:4096 -keyout ./certs/server.key -out ./certs/server.cert",
     "build": "docker build -t ahdinosaur/http-cache:$(jq -r .version package.json) .",
     "start": "bash example.sh",
-    "publish": "docker push ahdinosaur/http-cache"
+    "publish": "docker push ahdinosaur/http-cache:$(jq -r .version package.json)"
   },
   "license": "AGPL-3.0"
 }
