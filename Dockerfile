@@ -9,7 +9,7 @@ RUN \
   echo "deb-src http://deb.debian.org/debian stretch-updates main" | tee -a /etc/apt/sources.list && \
   apt-get update -y && \
   apt-get install -y --no-install-recommends \
-    git devscripts equivs ca-certificates nginx-light && \
+    git devscripts equivs ssl-cert ca-certificates nginx-light && \
   mk-build-deps nginx --install --remove --tool "apt-get -y --no-install-recommends" && \
   cd /app && \
     apt-get source nginx && \

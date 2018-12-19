@@ -1,8 +1,8 @@
 # http-cache
 
-**(not sure if this approach will be good enough for HTTPS, caveat emptor.)**
-
 a Docker image to use [Nginx](https://nginx.org/en/) as an HTTP(S) proxy to cache static assets.
+
+**caveat emptor: can only do insecure HTTPS proxying**
 
 helpful when you need to repeatedly install packages from `apt-get`, `npm`, `cargo`, etc.
 
@@ -22,13 +22,11 @@ docker pull ahdinosaur/http-cache
 
 then run it as:
 
-```
+```shell
 docker run -it --rm \
   -p 3142:3142 \
   -v "$(pwd)/cacher/log:/var/log/nginx" \
   -v "$(pwd)/cacher/data:/var/cache/nginx" \
-  -v "$(pwd)/certs/server.cert:/app/server.cert" \
-  -v "$(pwd)/certs/server.key:/app/server.key" \
   ahdinosaur/http-cache
 ```
 
@@ -36,15 +34,12 @@ notice you will need the volumes mounted to:
 
 - `/var/log/nginx`: the nginx logs (`cache_access.log`)
 - `/var/cache/nginx`: the nginx cache data
-- `/app/server.cert`: if using https, your self-signed cert
-- `/app/server.key`: if using https, your self-signed cert key
 
-if using https, your self-signed cert **must** be trusted by the client using the proxy.
+to test it works:
 
-(TODO check this) to do this on Debian Linux:
-
-- copy your self-signed cert files to `/etc/ssl/certs/`
-- run `sudo update-ca-certificates`
+```shell
+curl -I --proxy 'http://localhost:3142' 'https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min.js'
+```
 
 ## license
 
